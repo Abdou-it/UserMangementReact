@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
-export default function UsersAdd({lastId}) {
+export default function UsersAdd({lastId,onAddUser}) {
+    const fullName = useRef(null)
+    const country = useRef(null)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        
+        
+        
+        onAddUser({
+            payload:{
+                fullName:fullName.current.value,
+                country:country.current.value,
+                id: lastId + 1
+            }
+        })
+    }
     return (
         <>
             <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center">Add User</h1>
 
             <form
+            onSubmit={handleSubmit}
                 className="bg-white shadow-md rounded-lg p-6 w-full max-w-md mx-auto"
             >
                 <div className="mb-4">
@@ -20,20 +36,24 @@ export default function UsersAdd({lastId}) {
                 </div>
 
                 <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2">Full Name</label>
+                <label htmlFor='fullName' className="block text-gray-700 font-medium mb-2">Full Name</label>
                 <input
                     type="text"
                     name="fullName"
+                    id='fullName'
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
                     placeholder="Enter full name"
+                    ref={fullName}
                 />
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-gray-700 font-medium mb-2">Country</label>
+                    <label htmlFor='country' className="block text-gray-700 font-medium mb-2">Country</label>
                     <select
                         name="country"
+                        id='country'
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring focus:ring-blue-200"
+                        ref={country}
                     >
                         <option value="">Select a country</option>
                         <option value="Algeria">Algeria</option>
